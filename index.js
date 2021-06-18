@@ -69,6 +69,7 @@ function evolve(grid) {
         gen++;
     }
     
+    document.querySelector(".grid").style.pointerEvents = "none";
     document.querySelector("h3").style.display = `block`;
     document.querySelector("h3").innerHTML = `Current Population: ${checkPopulation(grid)}`;
     document.querySelector("h4").style.display = `inline`;
