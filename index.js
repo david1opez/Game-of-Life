@@ -10,16 +10,16 @@
 // 4. f there is 1 neighbor it duplicates
 
 var input_grid = [
-    [1, 0, 0, 0, 0, 1, 0, 1, 0, 0],
-    [1, 0, 0, 0, 0, 1, 0, 0, 0, 1],
-    [0, 0, 1, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-    [1, 1, 0, 0, 0, 1, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 1, 0, 0, 0, 1],
-    [0, 0, 1, 0, 1, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-    [1, 1, 0, 0, 0, 1, 1, 0, 0, 0]
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
 var elements = [
@@ -37,7 +37,15 @@ var elements = [
 
 var gen = 0;
 
-start();
+draw(input_grid);
+
+document.querySelector("button").addEventListener("click", () => {start()})
+
+function input(coords) {
+    input_grid[coords[1]][coords[0]] = 1;
+
+    draw(input_grid);
+}
 
 function draw(grid) {
     for (var y = 0; y < grid.length; y++) {
@@ -75,26 +83,31 @@ function evolve(grid) {
                         neighbours++;
                     }
                 }
-                catch (_a) { }
+                catch { }
                 try {
                     if (grid[y + 1][x] == 1) {
                         neighbours++;
                     }
                 }
-                catch (_b) { }
+                catch { }
                 try {
                     if (grid[y][x - 1] == 1) {
                         neighbours++;
                     }
                 }
-                catch (_c) { }
+                catch { }
                 try {
                     if (grid[y][x + 1] == 1) {
                         neighbours++;
                     }
                 }
-                catch (_d) { }
-                if (neighbours >= 2 || neighbours == 0) {
+                catch { }
+
+
+                if (neighbours >= 2) {
+                    grid[y][x] = 0;
+                }
+                else if(neighbours == 0) {
                     grid[y][x] = 0;
                 }
                 else if (neighbours == 1) {
@@ -126,9 +139,6 @@ function evolve(grid) {
                     var randomCord = Math.floor(Math.random() * (empty.length - 1 - 0));
                     grid[empty[randomCord][0]][empty[randomCord][1]] = 1;
                 }
-                else {
-                    grid[y][x] == 1;
-                }
                 neighbours = 0;
             }
         }
@@ -137,8 +147,8 @@ function evolve(grid) {
 }
 
 function start() {
-    draw(input_grid);
-
+    document.querySelector("button").style.display = "none";
+    document.querySelector("h1").style.display = "block"
     document.querySelector("h2").innerHTML = `Starting Population: ${checkPopulation(input_grid)}`
 
     setTimeout(() => {document.querySelector("h1").innerHTML = "Starting in 4"}, 1000);
